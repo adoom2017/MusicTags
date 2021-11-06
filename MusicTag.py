@@ -23,7 +23,7 @@ class MusicTag(object):
         pass
 
     def edit_tag(self, music):
-        print("开始编辑" + music['path'] + "的标签......")
+        print("开始编辑" + music['title'] + "的标签......")
         music_file = music_tag.load_file(music['path'])
         music_file['title'] = music.get('title', "")
         music_file['artist'] = music.get('artist', "")

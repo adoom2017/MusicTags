@@ -13,7 +13,7 @@
 __MUSIC_PATH__ = "/Users/will/Code/MusicTags/music"
 
 # __MUSIC_PATH__ = "/Users/will/Code/MusicTags/music/李荣浩-老街.mp3"
-
+import os.path
 from pathlib import Path
 
 from MusicTag import MusicTag
@@ -21,8 +21,12 @@ from QQMuiscAPI import QQMuiscAPI
 from Utils import traverse_dir_files, download
 
 if __name__ == '__main__':
+    music_path = input("请输入音乐文件所在的目录：")
+    # 判断输入的目录是否存在
+    if not music_path or not os.path.exists(music_path):
+        music_path = __MUSIC_PATH__
     # 遍历目录下的所有文件
-    file_path, file_name = traverse_dir_files(__MUSIC_PATH__, ext='mp3')
+    file_path, file_name = traverse_dir_files(music_path, ext='mp3')
     for i, file in enumerate(file_name):
         # 初始化
         qq = QQMuiscAPI()
@@ -54,13 +58,13 @@ if __name__ == '__main__':
         music['path'] = file_path[i]
         mt.edit_tag(music)
         # 下载歌曲封面
-        print("开始下载歌曲封面......")
-        cover_path = __MUSIC_PATH__ + '/' + singer + "-" + music_name + ".jpg"
-        download(music.get('cover', ""), cover_path)
-        # print("歌曲封面下载完成")
-        # 给歌曲添加封面
-        mt.add_cover(music.get('path', ""), cover_path)
-        # print(music)
+        if music.get('cover'):
+            print("开始下载歌曲封面......")
+            cover_path = __MUSIC_PATH__ + '/' + singer + "-" + music_name + ".jpg"
+            download(music.get('cover', ""), cover_path)
+            # print("歌曲封面下载完成")
+            # 给歌曲添加封面
+            mt.add_cover(music.get('path', ""), cover_path)
         print("------------------------------------------------------------")
         qq.close()
 
