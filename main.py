@@ -64,35 +64,4 @@ if __name__ == '__main__':
         exit()
     else:
         print("Oops： 你输入的目录不存哟！！！")
-    #     # 初始化
-    #     qq = QQMuiscAPI()
-    #     mt = MusicTag()
-    #
-    #
 
-    #     # 获取歌曲信息
-    #     music = qq.get_music_info(music_name + ' ' + singer)
-    #     # 如果获取失败
-    #     if not music:
-    #         print("歌曲信息获取失败！！！")
-    #         music['title'] = music_name
-    #         music['artist'] = singer
-    #         music['album'] = music_name
-    #         music['genre'] = "Pop"
-    #         music['lyrics'] = "暂时没有歌词"
-    #         # music['year'] = ""
-    #
-    #     music['path'] = file_path[i]
-    #     mt.edit_tag(music)
-    #     # 下载歌曲封面
-    #     if music.get('cover'):
-    #         print("开始下载歌曲封面......")
-    #         cover_path = __MUSIC_PATH__ + '/' + singer + "-" + music_name + ".jpg"
-    #         download(music.get('cover', ""), cover_path)
-    #         # print("歌曲封面下载完成")
-    #         # 给歌曲添加封面
-    #         mt.add_cover(music.get('path', ""), cover_path)
-    #     print("------------------------------------------------------------")
-    #     qq.close()
-    #
-    # pass
