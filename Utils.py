@@ -14,30 +14,53 @@ import time
 import selenium
 
 
-def traverse_dir_files(root_dir, ext=None, is_sorted=True):
+def get_music_file_info(music_name):
+    name_split = music_name.split("-")
+    singer = ''
+    name = ''
+    if len(name_split) == 2:
+        singer = name_split[0]
+        name = name_split[1]
+    else:
+        name = name_split[0]
+    return {'name': name, 'singer': singer}
+
+
+def get_dir_file_list(root_dir, exts=[]):
     """
     列出文件夹中的文件, 深度遍历
     :param root_dir: 根目录
-    :param ext: 后缀名
-    :param is_sorted: 是否排序，耗时较长
-    :return: [文件路径列表, 文件名称列表]
+    :param exts: 后缀名列表
+    :return: 文件信息字典
     """
-    names_list = []
-    paths_list = []
-    for parent, _, fileNames in os.walk(root_dir):
-        for name in fileNames:
-            if name.startswith('.'):  # 去除隐藏文件
-                continue
-            if ext:  # 根据后缀名搜索
-                if name.endswith(tuple(ext)):
-                    names_list.append(name)
-                    paths_list.append(os.path.join(parent, name))
+
+    file_list = []
+    for parent, _, file_name_list in os.walk(root_dir):
+        for file_item in file_name_list:
+            file = {}
+            file_path = parent + "/" + file_item
+            # 文件路径
+            file['path'] = file_path
+            # 文件名带后缀
+            file['name'] = file_item
+            # 文件名不带后缀
+            file['base_name'] = os.path.splitext(file_item)[0]
+            # 文件后缀
+            file['suffix'] = os.path.splitext(file_item)[-1]
+            # 所在目录
+            file['parent'] = parent
+            # 文件大小
+            file['size'] = os.path.getsize(file_path)
+            # print(file)
+            # 如果后缀列表为空则全部添加，否则只返回后缀列表中的类型
+            if exts:
+                for ext in exts:
+                    if ext == file['suffix']:
+                        file_list.append(file)
             else:
-                names_list.append(name)
-                paths_list.append(os.path.join(parent, name))
-    if not names_list:  # 文件夹为空
-        return paths_list, names_list
-    return paths_list, names_list
+                file_list.append(file)
+
+    return file_list
 
 
 def download(url, path):
@@ -54,8 +77,10 @@ def download(url, path):
             response = requests.get(url)
             f.write(response.content)
             f.close()
+            return True
         except Exception as e:
             print(e)
+            return False
             pass
         finally:
             f.close()
