@@ -13,17 +13,16 @@ import os
 import time
 import selenium
 
-
 def get_music_file_info(music_name):
     name_split = music_name.split("-")
-    singer = ''
+    artist = ''
     name = ''
     if len(name_split) == 2:
-        singer = name_split[0]
+        artist = name_split[0]
         name = name_split[1]
     else:
         name = name_split[0]
-    return {'name': name, 'singer': singer}
+    return {'name': name, 'artist': artist}
 
 
 def get_dir_file_list(root_dir, exts=[]):

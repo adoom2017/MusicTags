@@ -17,7 +17,7 @@ class Config(object):
     # 操作系统是否是Linux
     SYSTEM_IS_LINUX = None
     # Chrome驱动的所在路径
-    CHROME_DIRVER_PATH = "libs"
+    CHROME_DIRVER_PATH = "/usr/bin/"
     # Chrome是否运行在无头模式下
     CHROME_IS_RUN_NO_HEAD=False
 
